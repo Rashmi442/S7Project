@@ -1,0 +1,8 @@
+../Core/Src/crypto.c:27:17:generate_session_id	4
+../Core/Src/crypto.c:57:16:Crypto_Init	2
+../Core/Src/crypto.c:77:10:Crypto_GetSessionId	1
+../Core/Src/crypto.c:82:10:Crypto_GetNonceCounter	1
+../Core/Src/crypto.c:87:10:Crypto_GetLastEncryptionTimeUs	1
+../Core/Src/crypto.c:92:6:Crypto_GenerateNonce	2
+../Core/Src/crypto.c:110:16:Crypto_EncryptSample	7
+../Core/Src/crypto.c:165:16:Crypto_DecryptSample	7

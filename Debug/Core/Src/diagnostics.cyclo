@@ -1,0 +1,8 @@
+../Core/Src/diagnostics.c:20:6:Diagnostics_Init	2
+../Core/Src/diagnostics.c:32:6:Diagnostics_ReportFault	2
+../Core/Src/diagnostics.c:43:10:Diagnostics_GetFaultCount	2
+../Core/Src/diagnostics.c:55:10:Diagnostics_GetTotalFaults	1
+../Core/Src/diagnostics.c:60:22:Diagnostics_GetMetrics	1
+../Core/Src/diagnostics.c:68:6:Diagnostics_UpdateMetrics	2
+../Core/Src/diagnostics.c:78:6:Diagnostics_HeartbeatToggle	1
+../Core/Src/diagnostics.c:83:6:Diagnostics_FaultBlink	4

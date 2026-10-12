@@ -1,0 +1,12 @@
+../Core/Src/sensors.c:28:14:ecg_normal_waveform	40	static
+../Core/Src/sensors.c:43:14:ecg_arrhythmia_waveform	40	static
+../Core/Src/sensors.c:61:6:Sensors_Init	8	static
+../Core/Src/sensors.c:76:6:Sensors_SetSimulationMode	16	static
+../Core/Src/sensors.c:84:17:Sensors_GetSimulationMode	4	static
+../Core/Src/sensors.c:89:6:Sensors_CycleSimulationMode	4	static
+../Core/Src/sensors.c:97:9:Sensors_ReadECGSample	32	static
+../Core/Src/sensors.c:132:7:Sensors_GetHeartRate	16	static
+../Core/Src/sensors.c:157:7:Sensors_GetSpO2	16	static
+../Core/Src/sensors.c:182:7:Sensors_GetTemperature	16	static
+../Core/Src/sensors.c:207:10:Sensors_EvaluateEmergency	24	static
+../Core/Src/sensors.c:280:6:Sensors_AcquireSample	24	static

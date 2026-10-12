@@ -1,0 +1,4 @@
+../Core/Src/app_tasks.c:25:6:StartDefaultTask	80	static
+../Core/Src/app_tasks.c:75:6:StartTask02	128	static
+../Core/Src/app_tasks.c:122:6:StartTask03	24	static
+../Core/Src/app_tasks.c:156:6:StartTask04	16	static

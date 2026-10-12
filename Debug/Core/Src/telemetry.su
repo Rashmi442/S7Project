@@ -1,0 +1,6 @@
+../Core/Src/telemetry.c:12:6:Telemetry_PostSample	32	static
+../Core/Src/telemetry.c:35:20:Telemetry_ReceiveSample	24	static
+../Core/Src/telemetry.c:49:6:Telemetry_ReleaseSample	16	static
+../Core/Src/telemetry.c:57:6:Telemetry_PostPacket	32	static
+../Core/Src/telemetry.c:80:17:Telemetry_ReceivePacket	24	static
+../Core/Src/telemetry.c:94:6:Telemetry_ReleasePacket	16	static
