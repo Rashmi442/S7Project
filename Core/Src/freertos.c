@@ -76,10 +76,12 @@ void MX_FREERTOS_Init(void)
 
 /**
  * @brief FreeRTOS Application Idle Hook:
- *        Executes when no application tasks are ready to run, placing the
- *        Cortex-M4 core in sleep mode until the next peripheral/SysTick interrupt.
+ *        Executes when no application tasks are ready to run.
+ *        In Debug mode, we avoid WFI to prevent disconnecting the ST-LINK SWD clock.
  */
 void vApplicationIdleHook(void)
 {
-    __WFI(); /* Wait For Interrupt (Low power management) */
+#ifndef DEBUG
+    __WFI(); /* Wait For Interrupt (Low power management in release) */
+#endif
 }

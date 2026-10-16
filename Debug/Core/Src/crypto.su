@@ -1,8 +1,0 @@
-../Core/Src/crypto.c:27:17:generate_session_id	64	static
-../Core/Src/crypto.c:57:16:Crypto_Init	16	static
-../Core/Src/crypto.c:77:10:Crypto_GetSessionId	4	static
-../Core/Src/crypto.c:82:10:Crypto_GetNonceCounter	4	static
-../Core/Src/crypto.c:87:10:Crypto_GetLastEncryptionTimeUs	4	static
-../Core/Src/crypto.c:92:6:Crypto_GenerateNonce	40	static
-../Core/Src/crypto.c:110:16:Crypto_EncryptSample	128	static
-../Core/Src/crypto.c:165:16:Crypto_DecryptSample	112	static

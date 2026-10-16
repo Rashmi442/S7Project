@@ -1,8 +1,8 @@
-../Core/Src/system_status.c:15:6:SystemStatus_Init	8	static
-../Core/Src/system_status.c:30:6:SystemStatus_SetState	16	static
-../Core/Src/system_status.c:37:15:SystemStatus_GetState	4	static
-../Core/Src/system_status.c:42:6:SystemStatus_IncPacketsSent	8	static
-../Core/Src/system_status.c:49:6:SystemStatus_IncPacketsDropped	8	static
-../Core/Src/system_status.c:56:6:SystemStatus_IncCryptoOps	8	static
-../Core/Src/system_status.c:63:6:SystemStatus_SetLastSeq	16	static
-../Core/Src/system_status.c:70:16:SystemStatus_Snapshot	56	static
+../Core/Src/system_status.c:15:6:SystemStatus_Init	4	static
+../Core/Src/system_status.c:26:6:SystemStatus_SetState	16	static
+../Core/Src/system_status.c:33:15:SystemStatus_GetState	4	static
+../Core/Src/system_status.c:38:6:SystemStatus_IncPacketsSent	8	static
+../Core/Src/system_status.c:45:6:SystemStatus_IncPacketsDropped	8	static
+../Core/Src/system_status.c:52:6:SystemStatus_IncCryptoOps	8	static
+../Core/Src/system_status.c:59:6:SystemStatus_SetLastSeq	16	static
+../Core/Src/system_status.c:66:16:SystemStatus_Snapshot	56	static

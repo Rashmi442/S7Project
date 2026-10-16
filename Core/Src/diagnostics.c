@@ -19,14 +19,12 @@ static DiagnosticsMetrics_t s_metrics;
 
 void Diagnostics_Init(void)
 {
-    taskENTER_CRITICAL();
     for (int i = 0; i < FAULT_COUNT; i++)
     {
         s_fault_counts[i] = 0U;
     }
     s_total_faults = 0U;
     memset(&s_metrics, 0, sizeof(s_metrics));
-    taskEXIT_CRITICAL();
 }
 
 void Diagnostics_ReportFault(FaultCode_t code)

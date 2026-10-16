@@ -30,6 +30,14 @@ int main(void)
     /* Configure the system clock to 84 MHz using reliable HSI + PLL */
     SystemClock_Config();
 
+    /* Enable Debugger in Low Power Modes so ST-LINK SWD never loses connection */
+    HAL_DBGMCU_EnableDBGSleepMode();
+    HAL_DBGMCU_EnableDBGStopMode();
+    HAL_DBGMCU_EnableDBGStandbyMode();
+
+    /* Freeze Independent Watchdog during debugger halt */
+    __HAL_DBGMCU_FREEZE_IWDG();
+
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
     MX_DMA_Init();

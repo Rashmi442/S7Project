@@ -20,6 +20,31 @@ static uint64_t            s_nonce_counter  = 0ULL;
 static bool                s_initialized    = false;
 static uint32_t            s_last_enc_time_us = 0U;
 
+/* ===== DEBUG VARIABLES FOR LIVE EXPRESSIONS ===== */
+
+/* Stage: 0 = IDLE, 1 = Plaintext ready, 2 = Encryption complete, 3 = Decryption verified */
+volatile uint32_t         g_debug_stage          = 0U;
+volatile uint32_t         g_debug_encrypt_status = 0U;
+volatile uint32_t         g_debug_decrypt_status = 0U;
+volatile uint32_t         g_debug_packet_count   = 0U;
+volatile uint32_t         g_debug_enc_time_us    = 0U;
+
+/* 1. Data before encryption (Plaintext) */
+volatile TelemetrySample_t g_debug_plain_sample;
+volatile uint8_t           g_debug_plaintext[PACKET_SAMPLE_PLAINTEXT_LEN];
+volatile uint8_t           g_debug_plain_len = 0U;
+
+/* 2. Nonce / IV (96-bit: 4 bytes Session ID + 8 bytes Counter) */
+volatile uint8_t           g_debug_nonce[CRYPTO_NONCE_BYTES];
+
+/* 3. Encrypted ciphertext & 128-bit authentication tag */
+volatile uint8_t           g_debug_ciphertext[PACKET_SAMPLE_PLAINTEXT_LEN];
+volatile uint8_t           g_debug_cipher_len = 0U;
+volatile uint8_t           g_debug_tag[CRYPTO_TAG_BYTES];
+
+/* 4. Decrypted sample (proves integrity and reversibility) */
+volatile TelemetrySample_t g_debug_decrypted_sample;
+
 /**
  * @brief Generates a unique 32-bit session ID combining MCU 96-bit Unique ID,
  *        SysTick timer register, and ADC analog noise.
@@ -125,6 +150,12 @@ CryptoStatus_t Crypto_EncryptSample(const TelemetrySample_t *sample, uint16_t se
         return CRYPTO_ERR_LENGTH;
     }
 
+    /* 1. Capture plaintext data before encryption for Live Expressions */
+    g_debug_plain_sample = *sample;
+    memcpy((void *)g_debug_plaintext, plaintext, plain_len);
+    g_debug_plain_len = (uint8_t)plain_len;
+    g_debug_stage = 1U;
+
     memset(pkt_out, 0, sizeof(SecurePacket_t));
     pkt_out->sync0      = PACKET_SYNC0;
     pkt_out->sync1      = PACKET_SYNC1;
@@ -134,6 +165,7 @@ CryptoStatus_t Crypto_EncryptSample(const TelemetrySample_t *sample, uint16_t se
     pkt_out->cipher_len = (uint8_t)plain_len;
 
     Crypto_GenerateNonce(pkt_out->nonce);
+    memcpy((void *)g_debug_nonce, pkt_out->nonce, CRYPTO_NONCE_BYTES);
 
     /* AAD: 7 bytes (sync0, sync1, version, type, seq[2], cipher_len) */
     uint8_t aad[PACKET_AAD_LEN];
@@ -158,6 +190,30 @@ CryptoStatus_t Crypto_EncryptSample(const TelemetrySample_t *sample, uint16_t se
     uint32_t end_cycles = DWT->CYCCNT;
     uint32_t cycles = (end_cycles >= start_cycles) ? (end_cycles - start_cycles) : (UINT32_MAX - start_cycles + end_cycles);
     s_last_enc_time_us = cycles / (SystemCoreClock / 1000000U);
+    g_debug_enc_time_us = s_last_enc_time_us;
+
+    if (ret == 0)
+    {
+        /* 2. Capture encrypted ciphertext and authentication tag for Live Expressions */
+        memcpy((void *)g_debug_ciphertext, pkt_out->ciphertext, plain_len);
+        memcpy((void *)g_debug_tag, pkt_out->tag, CRYPTO_TAG_BYTES);
+        g_debug_cipher_len = (uint8_t)plain_len;
+        g_debug_encrypt_status = 1U;
+        g_debug_stage = 2U;
+        g_debug_packet_count++;
+
+        /* 3. Loopback decryption test to verify authentication and data recovery */
+        CryptoStatus_t dec_status = Crypto_DecryptSample(pkt_out, (TelemetrySample_t *)&g_debug_decrypted_sample);
+        g_debug_decrypt_status = (dec_status == CRYPTO_OK) ? 1U : 0U;
+        if (dec_status == CRYPTO_OK)
+        {
+            g_debug_stage = 3U;
+        }
+    }
+    else
+    {
+        g_debug_encrypt_status = 0U;
+    }
 
     return (ret == 0) ? CRYPTO_OK : CRYPTO_ERR_ENCRYPT;
 }

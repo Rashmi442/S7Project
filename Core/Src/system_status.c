@@ -14,8 +14,6 @@ static SystemStatus_t s_status;
 
 void SystemStatus_Init(void)
 {
-    taskENTER_CRITICAL();
-
     s_status.state           = SYS_STATE_INIT;
     s_status.uptime_ms       = 0U;
     s_status.packets_sent    = 0U;
@@ -23,8 +21,6 @@ void SystemStatus_Init(void)
     s_status.crypto_ops      = 0U;
     s_status.last_seq        = 0U;
     s_status.session_id      = 0U;
-
-    taskEXIT_CRITICAL();
 }
 
 void SystemStatus_SetState(SystemState_t new_state)

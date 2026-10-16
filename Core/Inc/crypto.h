@@ -27,6 +27,29 @@ typedef enum
     CRYPTO_ERR_NULL_PARAM
 } CryptoStatus_t;
 
+/* ===== LIVE EXPRESSIONS / DEBUG WATCH EXPORTS ===== */
+extern volatile uint32_t          g_debug_stage;
+extern volatile uint32_t          g_debug_encrypt_status;
+extern volatile uint32_t          g_debug_decrypt_status;
+extern volatile uint32_t          g_debug_packet_count;
+extern volatile uint32_t          g_debug_enc_time_us;
+
+/* 1. Plaintext data before encryption */
+extern volatile TelemetrySample_t g_debug_plain_sample;
+extern volatile uint8_t           g_debug_plaintext[PACKET_SAMPLE_PLAINTEXT_LEN];
+extern volatile uint8_t           g_debug_plain_len;
+
+/* 2. Nonce / IV (96-bit) */
+extern volatile uint8_t           g_debug_nonce[CRYPTO_NONCE_BYTES];
+
+/* 3. Encrypted ciphertext & 128-bit authentication tag */
+extern volatile uint8_t           g_debug_ciphertext[PACKET_SAMPLE_PLAINTEXT_LEN];
+extern volatile uint8_t           g_debug_cipher_len;
+extern volatile uint8_t           g_debug_tag[CRYPTO_TAG_BYTES];
+
+/* 4. Decrypted sample */
+extern volatile TelemetrySample_t g_debug_decrypted_sample;
+
 /**
  * @brief Initializes mbedTLS GCM context with g_aes_key, generates a unique
  *        32-bit session ID for this boot cycle, and resets the monotonic counter.
